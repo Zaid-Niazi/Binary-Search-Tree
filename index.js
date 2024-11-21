@@ -8,12 +8,15 @@ class Node {
 
 class Tree {
   constructor(array) {
-    this.root = this.buildTree(array); // Initialize `root` using the method
+    this.root = this.buildTree(array);
   }
 
   buildTree(array) {
     sorter(array);
-    return builder(array); // Fixed to return the correct root node
+    return builder(array);
+  }
+  insert(value) {
+    traverse(value, this.root);
   }
 }
 
@@ -44,6 +47,23 @@ function builder(arr) {
   return root;
 }
 
+function traverse(val, root) {
+  if (root.data > val) {
+    if (root.left !== null) {
+      traverse(val, root.left);
+    } else {
+      root.left = new Node(val);
+    }
+  }
+  if (root.data < val) {
+    if (root.right !== null) {
+      traverse(val, root.right);
+    } else {
+      root.right = new Node(val);
+    }
+  }
+}
+
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
@@ -59,5 +79,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const test = new Tree(array);
+test.insert(2);
 
 prettyPrint(test.root);
