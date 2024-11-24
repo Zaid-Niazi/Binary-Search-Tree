@@ -18,6 +18,9 @@ class Tree {
   insert(value) {
     traverse(value, this.root);
   }
+  deleteItem(value) {
+    deleteTraverse(value, this.root);
+  }
 }
 
 function sorter(array) {
@@ -63,6 +66,37 @@ function traverse(val, root) {
     }
   }
 }
+function deleteTraverse(val, root) {
+  let currentParent = root;
+  traversal(currentParent, root);
+  function traversal(currentParent, root) {
+    if (root.data !== val) {
+      if (val < root.data) {
+        traversal(root, root.left);
+      } else if (val > root.data) {
+        traversal(root, root.right);
+      }
+    } else if (root.data === val) {
+      //leaf
+      if (root.left === null && root.right === null) {
+        if (currentParent.left !== null && currentParent.left.data === val) {
+          currentParent.left = null;
+        } else if (
+          currentParent.right !== null &&
+          currentParent.right.data === val
+        ) {
+          currentParent.right = null;
+        }
+      }
+      // node with one child
+      if (root.left === null || root.right === null) {
+        if (root.left !== null) {
+        } else if (root.right !== null) {
+        }
+      }
+    }
+  }
+}
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -80,5 +114,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const test = new Tree(array);
 test.insert(2);
-
+test.deleteItem(1);
 prettyPrint(test.root);
