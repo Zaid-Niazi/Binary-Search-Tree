@@ -1,3 +1,4 @@
+//node class
 class Node {
   constructor(data, left = null, right = null) {
     this.data = data; // Changed 'value' to 'data'
@@ -5,7 +6,7 @@ class Node {
     this.right = right;
   }
 }
-
+// Tree class
 class Tree {
   constructor(array) {
     this.root = this.buildTree(array);
@@ -22,6 +23,8 @@ class Tree {
     deleteTraverse(value, this.root);
   }
 }
+
+// methods for tree
 
 function sorter(array) {
   array.sort(function (a, b) {
@@ -91,13 +94,50 @@ function deleteTraverse(val, root) {
       // node with one child
       if (root.left === null || root.right === null) {
         if (root.left !== null) {
+          if (currentParent.left.data === root.data) {
+            currentParent.left = root.left;
+          } else if (currentParent.right.data === root.data) {
+            currentParent.right = root.left;
+          }
         } else if (root.right !== null) {
+          if (currentParent.left.data === root.data) {
+            currentParent.left = root.right;
+          } else if (currentParent.right.data === root.data) {
+            currentParent.right = root.right;
+          }
+        }
+
+        // node with Two children
+      } else if (root.left !== null && root.right !== null) {
+        let replacer;
+        let replacerParent;
+        recursion(root, root.right);
+        function recursion(currentParent, root) {
+          if (root.left === null) {
+            replacerParent = currentParent;
+
+            replacer = root.data;
+
+            deleteTraverse(replacer, replacerParent);
+            return root;
+          }
+          recursion(root, root.left);
+        }
+        if (currentParent !== root) {
+          if (currentParent.left.data === root.data) {
+            currentParent.left.data = replacer;
+          } else if (currentParent.right.data === root.data) {
+            currentParent.right.data = replacer;
+          }
+        } else {
+          root.data = replacer;
         }
       }
     }
   }
 }
 
+// printer
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
@@ -111,8 +151,13 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
+//
+
 let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const test = new Tree(array);
 test.insert(2);
-test.deleteItem(1);
+test.insert(2.2);
+
+test.deleteItem(8);
+
 prettyPrint(test.root);
