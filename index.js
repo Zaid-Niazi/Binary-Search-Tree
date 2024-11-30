@@ -22,6 +22,22 @@ class Tree {
   deleteItem(value) {
     deleteTraverse(value, this.root);
   }
+
+  find(val) {
+    traverse(this.root, val);
+    function traverse(root, val) {
+      if (root.data === val) {
+        console.log(root);
+        return root;
+      } else {
+        if (val < root.data) {
+          traverse(root.left, val);
+        } else if (val > root.data) {
+          traverse(root.right, val);
+        }
+      }
+    }
+  }
 }
 
 // methods for tree
@@ -158,6 +174,6 @@ const test = new Tree(array);
 test.insert(2);
 test.insert(2.2);
 
-test.deleteItem(8);
+test.find(4);
 
 prettyPrint(test.root);
