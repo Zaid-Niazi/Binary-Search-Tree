@@ -1,7 +1,7 @@
 //node class
 class Node {
   constructor(data, left = null, right = null) {
-    this.data = data; // Changed 'value' to 'data'
+    this.data = data;
     this.left = left;
     this.right = right;
   }
@@ -36,6 +36,18 @@ class Tree {
           traverse(root.right, val);
         }
       }
+    }
+  }
+
+  levelOrder(callback) {
+    if (callback === undefined) throw console.error("Callback required");
+    if (this.root === null) return;
+    let queue = [this.root];
+    while (queue.length > 0) {
+      let root = queue.shift();
+      callback(root);
+      if (root.left !== null) queue.push(root.left);
+      if (root.right !== null) queue.push(root.right);
     }
   }
 }
@@ -174,6 +186,10 @@ const test = new Tree(array);
 test.insert(2);
 test.insert(2.2);
 
-test.find(4);
+// test.find(4);
+test.levelOrder(func);
 
+function func(root) {
+  console.log(root);
+}
 prettyPrint(test.root);
