@@ -24,16 +24,16 @@ class Tree {
   }
 
   find(val) {
-    traverse(this.root, val);
+    return traverse(this.root, val);
     function traverse(root, val) {
+      if (root === null) return null;
       if (root.data === val) {
-        console.log(root);
         return root;
       } else {
         if (val < root.data) {
-          traverse(root.left, val);
-        } else if (val > root.data) {
-          traverse(root.right, val);
+          return traverse(root.left, val);
+        } else {
+          return traverse(root.right, val);
         }
       }
     }
@@ -49,6 +49,66 @@ class Tree {
       if (root.left !== null) queue.push(root.left);
       if (root.right !== null) queue.push(root.right);
     }
+  }
+  inOrder(callback) {
+    trav(this.root);
+    function trav(root) {
+      if (root === null) return;
+      trav(root.left);
+      callback(root);
+
+      trav(root.right);
+    }
+  }
+  preOrder(callback) {
+    trav(this.root);
+    function trav(root) {
+      if (root === null) return;
+      callback(root);
+      trav(root.left);
+      trav(root.right);
+    }
+  }
+  postOrder(callback) {
+    trav(this.root);
+    function trav(root) {
+      if (root === null) return;
+      trav(root.left);
+      trav(root.right);
+      callback(root);
+    }
+  }
+
+  height(node) {
+    let root = this.find(node);
+    function trav(node) {
+      if (node === null) return -1;
+
+      let left = trav(node.left);
+      let right = trav(node.right);
+      return 1 + Math.max(left, right);
+    }
+    return trav(root);
+  }
+  depth(input) {
+    let root = this.root;
+
+    let counter = 0;
+    function findVal(root) {
+      if (root === null) return null;
+      if (root.data === input) return root;
+      else {
+        if (input < root.data) {
+          counter++;
+          return findVal(root.left);
+        } else if (input > root.data) {
+          counter++;
+          return findVal(root.right);
+        }
+      }
+    }
+    findVal(root);
+    return counter;
   }
 }
 
@@ -186,9 +246,10 @@ const test = new Tree(array);
 test.insert(2);
 test.insert(2.2);
 
-// test.find(4);
-test.levelOrder(func);
-
+// test.levelOrder(func);
+// test.inOrder(func);
+// console.log(test.height(5));
+console.log(test.depth(4));
 function func(root) {
   console.log(root);
 }
