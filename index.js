@@ -107,6 +107,12 @@ class Tree {
     }
   }
 
+  reBalance() {
+    if (this.isBalanced() === false) {
+      this.root = this.buildTree(array);
+    }
+  }
+
   depth(input) {
     let root = this.root;
 
@@ -164,6 +170,7 @@ function traverse(val, root) {
       traverse(val, root.left);
     } else {
       root.left = new Node(val);
+      array.push(val);
     }
   }
   if (root.data < val) {
@@ -171,6 +178,7 @@ function traverse(val, root) {
       traverse(val, root.right);
     } else {
       root.right = new Node(val);
+      array.push(val);
     }
   }
 }
@@ -272,4 +280,6 @@ function func(root) {
   console.log(root);
 }
 console.log(test.isBalanced());
+test.reBalance();
+
 prettyPrint(test.root);
