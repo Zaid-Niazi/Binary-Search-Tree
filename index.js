@@ -93,8 +93,8 @@ class Tree {
 
   isBalanced() {
     let root = this.root;
+    console.log(checkBalance(root) !== -1);
     return checkBalance(root) !== -1;
-
     function checkBalance(node) {
       if (node === null) return 0;
       let left = checkBalance(node.left);
@@ -268,18 +268,11 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const test = new Tree(array);
-
-// test.levelOrder(func);
+// test.preOrder((x) => console.log(x));
+// test.postOrder((x) => console.log(x));
+// test.levelOrder((x) => console.log(x));
 test.insert(2);
 test.insert(2.2);
-
-// test.inOrder(func);
-// console.log(test.height(5));
-console.log(test.depth(4));
-function func(root) {
-  console.log(root);
-}
-console.log(test.isBalanced());
+test.isBalanced();
 test.reBalance();
-
 prettyPrint(test.root);
